@@ -27,6 +27,7 @@ function start(){
     interval = setInterval(startStopwatch, 10)
     toggleStartStopBtn.innerText = 'Stop'
     toggleLapResetBtn.innerText = 'Lap'
+    toggleLapResetBtn.classList.remove('reset-active')
     toggleLapResetBtn.disabled = false
     toggleLapResetBtn.removeEventListener('click' , resetStopwatch)
     toggleLapResetBtn.addEventListener('click' ,  lap)
@@ -35,6 +36,7 @@ function start(){
 function stop(){
     toggleStartStopBtn.innerText = 'Start'
     toggleLapResetBtn.innerText = 'Reset'
+    toggleLapResetBtn.classList.add('reset-active')
     toggleLapResetBtn.removeEventListener('click' ,  lap)
     toggleLapResetBtn.addEventListener('click' , resetStopwatch)
 }

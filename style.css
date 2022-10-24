@@ -81,14 +81,22 @@ body{
     padding: 10px 0;
     border: none;
     border-radius: 5px;
-    background-color: rgb(87, 87, 255);
     color: white;
     font-size: 20px;
 }
 .buttons-stopwatch:disabled{
     background-color: rgb(201, 201, 253);
 }
+.start-stop-btn{
+    background-color: green;
+}
+.lap-reset-btn{
+    background-color: rgb(87, 87, 255);
+}
 .started{
+    background-color: red;
+}
+.reset-active{
     background-color: red;
 }
 .best-time{
