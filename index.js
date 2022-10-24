@@ -2,34 +2,70 @@ const hoursOut = document.querySelector('.hours')
 const minutesOut = document.querySelector('.minutes')
 const secondsOut = document.querySelector('.seconds')
 const milisecondsOut = document.querySelector('.miliseconds')
-const startBtn = document.querySelector('.start-btn')
-const pauseBtn = document.querySelector('.pause-btn')
-const resetBtn = document.querySelector('.reset-btn')
-const lapBtn = document.querySelector('.lap-btn')
+const toggleStartStopBtn = document.querySelector('.start-stop-btn')
+const toggleLapResetBtn = document.querySelector('.lap-reset-btn')
 const resultOut = document.querySelector('.result')
+toggleLapResetBtn.disabled = true
 const stopwatchValue = {
     hours: 0,
     minutes: 0,
     seconds: 0,
     milliseconds: 0,
     lapTime: 0,
-    lap: 1
+    lap: 1,
+    lapResult:[]
 }
 let interval
 
-startBtn.addEventListener('click' , ()=>{
+toggleStartStopBtn.addEventListener('click' , ()=>{
     clearInterval(interval)
+    toggleStartStopBtn.classList.toggle('started')
+    toggleStartStopBtn.className.includes('started') ? start() : stop()
+})
+
+function start(){
     interval = setInterval(startStopwatch, 10)
-})
-pauseBtn.addEventListener('click' , () => clearInterval(interval))
+    toggleStartStopBtn.innerText = 'Stop'
+    toggleLapResetBtn.innerText = 'Lap'
+    toggleLapResetBtn.disabled = false
+    toggleLapResetBtn.removeEventListener('click' , resetStopwatch)
+    toggleLapResetBtn.addEventListener('click' ,  lap)
 
-lapBtn.addEventListener('click' , () => {
-    resultOut.innerHTML += `<p>Lap ${stopwatchValue.lap} : ${msToTime(stopwatchValue.lapTime)}</p>`
-    stopwatchValue.lap++
+}
+function stop(){
+    toggleStartStopBtn.innerText = 'Start'
+    toggleLapResetBtn.innerText = 'Reset'
+    toggleLapResetBtn.removeEventListener('click' ,  lap)
+    toggleLapResetBtn.addEventListener('click' , resetStopwatch)
+}
+
+
+
+function lap(){
+    stopwatchValue.lapResult.push(stopwatchValue.lapTime)
+    console.log(stopwatchValue.lapResult)
+    randerLapResult()
     stopwatchValue.lapTime = 0
-})
-resetBtn.addEventListener('click' , resetStopwatch)
+}
 
+function randerLapResult(){
+    const {lapResult} = stopwatchValue
+    resultOut.innerHTML = ""
+    lapResult.forEach((timeLap ,index) =>{
+        if(timeLap === Math.min(...lapResult)){
+            resultOut.innerHTML += `<p class = 'best-time time-result'>Lap ${index + 1} - ${msToTime(timeLap)}</p>`
+        }
+        else if(timeLap === Math.max(...lapResult)){
+            resultOut.innerHTML += `<p class = 'worst-time time-result'>Lap ${index + 1} - ${msToTime(timeLap)}</p>`
+        }
+        else{
+            resultOut.innerHTML += `<p class = 'time-result'>Lap ${index + 1} - ${msToTime(timeLap)}</p>`
+        }
+          
+        }
+        
+    )
+}
 
 function startStopwatch(){
     stopwatchValue.milliseconds++
@@ -59,18 +95,19 @@ function msToTime(time){
     hours = (hours < 10) ? "0" + hours : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    console.log(seconds)
-  
-    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+    return `${hours} : ${minutes} : ${seconds} : ${milliseconds}`  
 }
+
 function resetStopwatch(){
     clearInterval(interval)
+    toggleLapResetBtn.disabled = true
     stopwatchValue.hours = 0
     stopwatchValue.minutes = 0
     stopwatchValue.seconds = 0
     stopwatchValue.milliseconds  = 0
     stopwatchValue.lapTime = 0
     stopwatchValue.lap = 1
+    stopwatchValue.lapResult = []
     hoursOut.innerText = '00'
     minutesOut.innerText = '00'
     secondsOut.innerText = '00'
