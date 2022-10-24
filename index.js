@@ -33,6 +33,7 @@ function start(){
     toggleLapResetBtn.addEventListener('click' ,  lap)
 
 }
+
 function stop(){
     toggleStartStopBtn.innerText = 'Start'
     toggleLapResetBtn.innerText = 'Reset'
@@ -41,11 +42,8 @@ function stop(){
     toggleLapResetBtn.addEventListener('click' , resetStopwatch)
 }
 
-
-
 function lap(){
     stopwatchValue.lapResult.push(stopwatchValue.lapTime)
-    console.log(stopwatchValue.lapResult)
     randerLapResult()
     stopwatchValue.lapTime = 0
 }
@@ -63,10 +61,7 @@ function randerLapResult(){
         else{
             resultOut.innerHTML += `<p class = 'time-result'>Lap ${index + 1} - ${msToTime(timeLap)}</p>`
         }
-          
-        }
-        
-    )
+        })
 }
 
 function startStopwatch(){

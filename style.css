@@ -115,6 +115,48 @@ body{
     margin-bottom: 20px;
     text-align: center;
     font-size: 20px;
-    font-weight: 600;
-    
+    font-weight: 600; 
 }
+
+/* responsive */
+
+@media screen and (max-width: 730px){
+    .stopwatch .box{
+        max-width: 120px;
+    }
+    .stopwatch {
+        justify-content: space-around;
+        gap: 0;
+    }
+    .title{
+        font-size: 20px;
+        
+       }
+}
+
+@media screen and (max-width: 550px){
+    .stopwatch .box{
+        max-width: 100px;
+    }
+    .time-result{
+        width: 300px;
+    }
+    .title{
+        font-size: 15px;
+        
+       }
+}
+@media screen and (max-width: 460px){
+
+    .stopwatch .box{
+        max-width: 80px;
+    }
+    .title{
+        font-size: 0.8em;
+        
+       }
+
+}
+
+
+
